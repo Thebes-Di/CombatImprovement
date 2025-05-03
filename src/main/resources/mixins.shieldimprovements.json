@@ -1,0 +1,16 @@
+{
+	"package": "shieldimprovements.mixin",
+	"required": true,
+	"refmap": "mixins.${mod_id}.refmap.json",
+	"target": "@env(DEFAULT)",
+	"minVersion": "0.8.5",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"EntityLivingBaseMixin"
+	],
+	"server": [],
+	"client": [],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
