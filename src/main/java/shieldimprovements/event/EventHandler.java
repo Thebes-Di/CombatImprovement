@@ -1,5 +1,7 @@
 package shieldimprovements.event;
 
+import net.minecraft.entity.Entity;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shieldimprovements.config.BlockShieldConfig;
 import shieldimprovements.config.ConfigHandler;
 import shieldimprovements.ShieldImprovements;
@@ -26,6 +28,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.LogManager;
+
+import java.util.UUID;
 
 public class EventHandler {
 
@@ -61,9 +65,10 @@ public class EventHandler {
             raiseTickDelay = config.getShieldRaiseTickDelay();
         }
         // 判断攻击是否来自于格挡角度内
-        if (!canBlockDamageSource(defender, source, raiseTickDelay)) return;
+        if (!canBlockDamageSource(defender, source)) return;
+        if (ConfigHandler.onlyPlayer && !(defender instanceof EntityPlayer)) return;
         event.setCanceled(true);
-        if (inCanBlockAngle(defender, source, blockAngle)){
+        if (inCanBlockAngle(defender, source, blockAngle, raiseTickDelay)){
             // 处理不同格挡模式
             switch (ConfigHandler.shieldModeEnum) {
                 case BLOCK_ALL_DAMAGE:
@@ -75,7 +80,7 @@ public class EventHandler {
                     break;
             }
         }else{
-            DamageSource newSource = new EntityDamageSourceIgnoreShield(source.getDamageType(), source.getTrueSource());
+            DamageSource newSource = new EntityDamageSourceIgnoreShield(source.getDamageType() + "IgnoreShield", source.getTrueSource());
             defender.attackEntityFrom(newSource, damage);
         }
 
@@ -111,9 +116,9 @@ public class EventHandler {
 
         if (source.isProjectile()){ world.setEntityState(defender, (byte) 29); return;}
 
-        if (ConfigHandler.onlyPlayer && !(defender instanceof EntityPlayer)) return;
 
         if (defender instanceof EntityPlayer) damageShield((EntityPlayer) defender,shield,damage);
+
 
         float reducedDamage = Math.max(damage - maxBlockDamage, 0.0F);
 
@@ -140,7 +145,7 @@ public class EventHandler {
             }
             blockUsingShield(attacker,defender);
         }
-        DamageSource newSource = new EntityDamageSourceIgnoreShield(source.getDamageType(), source.getTrueSource()).setIsReducedDamage();
+        DamageSource newSource = new EntityDamageSourceIgnoreShield(source.getDamageType() + "IgnoreShield", source.getTrueSource()).setIsReducedDamage();
         defender.attackEntityFrom(newSource, reducedDamage);
     }
 
@@ -163,9 +168,9 @@ public class EventHandler {
         return false;
     }
 
-    private boolean canBlockDamageSource(EntityLivingBase defender, DamageSource damagesource, int raiseTickDelay)
+    private boolean canBlockDamageSource(EntityLivingBase defender, DamageSource damagesource)
     {
-        if(!damagesource.isUnblockable() && isActiveItemStackBlocking(defender, raiseTickDelay)) {
+        if(!damagesource.isUnblockable() && isActiveItemStackBlocking(defender)) {
             Vec3d vec3d = damagesource.getDamageLocation();
             if(vec3d != null) {
                 Vec3d vec3d1 = defender.getLook(1.0F);
@@ -178,7 +183,7 @@ public class EventHandler {
         return false;
     }
 
-    private boolean inCanBlockAngle(EntityLivingBase defender, DamageSource damagesource, float blockAngleDegrees)
+    private boolean inCanBlockAngle(EntityLivingBase defender, DamageSource damagesource, float blockAngleDegrees, int raiseTickDelay)
     {
         Vec3d vec3d = damagesource.getDamageLocation();
         if(vec3d != null) {
@@ -193,21 +198,21 @@ public class EventHandler {
 
 
             // 判断是否在允许的格挡角度范围内
-            if(angleDegrees <= blockAngleDegrees / 2.0D) return true;
+            if(angleDegrees > blockAngleDegrees / 2.0D) return false;
+
+            else return defender.getItemInUseMaxCount() >= raiseTickDelay;
         }
 
-        return false;
+        else return false;
     }
 
 
-    private boolean isActiveItemStackBlocking(EntityLivingBase defender, int raiseTickDelay)
+    private boolean isActiveItemStackBlocking(EntityLivingBase defender)
     {
         if(defender.isHandActive() && !defender.getActiveItemStack().isEmpty()){
             Item item = defender.getActiveItemStack().getItem();
 
-            if(item.getItemUseAction(defender.getActiveItemStack()) != EnumAction.BLOCK) return false;
-
-            else return defender.getItemInUseMaxCount() >= raiseTickDelay;
+            return item.getItemUseAction(defender.getActiveItemStack()) == EnumAction.BLOCK;
 
         }
         else return false;
@@ -237,6 +242,17 @@ public class EventHandler {
     {
         attacker.knockBack(defender, 0.5F, defender.posX - attacker.posX, defender.posZ - attacker.posZ);
     }
+
+    private static void applyShieldKnockback(EntityLivingBase defender, DamageSource source) {
+        Entity attacker = source.getImmediateSource();
+        if (attacker instanceof EntityLivingBase && !source.isProjectile()) {
+            EntityLivingBase attackerLiving = (EntityLivingBase) attacker;
+            double dx = defender.posX - attackerLiving.posX;
+            double dz = defender.posZ - attackerLiving.posZ;
+            attackerLiving.knockBack(defender, 0.5F, dx, dz);
+        }
+    }
+
 
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

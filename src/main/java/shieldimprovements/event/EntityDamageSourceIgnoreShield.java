@@ -31,7 +31,12 @@ public class EntityDamageSourceIgnoreShield extends DamageSource {
     public ITextComponent getDeathMessage(EntityLivingBase entityLivingBaseIn)
     {
         ItemStack itemstack = this.damageSourceEntity instanceof EntityLivingBase ? ((EntityLivingBase)this.damageSourceEntity).getHeldItemMainhand() : ItemStack.EMPTY;
-        String s = "death.attack." + this.damageType;
+
+        String baseDamageType = this.damageType.endsWith("IgnoreShield")
+                ? this.damageType.substring(0, this.damageType.length() - "IgnoreShield".length())
+                : this.damageType;
+
+        String s = "death.attack." + baseDamageType;
         String s1 = s + ".item";
         return !itemstack.isEmpty() && itemstack.hasDisplayName() && I18n.canTranslate(s1) ? new TextComponentTranslation(s1, new Object[] {entityLivingBaseIn.getDisplayName(), this.damageSourceEntity.getDisplayName(), itemstack.getTextComponent()}) : new TextComponentTranslation(s, new Object[] {entityLivingBaseIn.getDisplayName(), this.damageSourceEntity.getDisplayName()});
     }
