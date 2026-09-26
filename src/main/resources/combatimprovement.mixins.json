@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "com.thebes_di.combatimprovement.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "LivingEntityMixin",
+    "MixinItemPotions$MixinItemThrowablePotion",
+    ,
+    "PlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

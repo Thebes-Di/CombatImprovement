@@ -1,0 +1,72 @@
+{
+  /*"itemGroup.combatimprovement": "Example Mod Tab",
+  "block.combatimprovement.example_block": "Example Block",
+  "item.combatimprovement.example_item": "Example Item",*/
+
+  "combatimprovement.configuration.title": "Combat Improvement Configs",
+  "combatimprovement.configuration.section.combatimprovement.common.toml": "Combat Improvement Configs",
+  "combatimprovement.configuration.section.combatimprovement.common.toml.title": "Combat Improvement Configs",
+
+  "combatimprovement.configuration.shieldMechanics": "Shield mechanics",
+  "combatimprovement.configuration.shieldMechanics.button": "",
+  "combatimprovement.configuration.shieldMechanics.tooltip": "",
+  "combatimprovement.configuration.shieldConfigs": "Shield configs",
+  "combatimprovement.configuration.shieldConfigs.button": "",
+  "combatimprovement.configuration.shieldConfigs.tooltip": "Format: itemId;resistance;angle;delay\nExample: minecraft:shield;3.0;90.0;5",
+  "combatimprovement.configuration.newShieldMechanics": "新盾牌机制",
+  "combatimprovement.configuration.newShieldMechanics.tooltip": "是否启用新盾牌机制",
+  "combatimprovement.configuration.onlyPlayer": "Only player",
+  "combatimprovement.configuration.onlyPlayer.tooltip": "Only player use new shield mechanics",
+  "combatimprovement.configuration.resistanceMode":"Resistance effective mode",
+  "combatimprovement.configuration.resistanceMode.tooltip": "",
+  "combatimprovement.configuration.shieldCooldownMin": "",
+  "combatimprovement.configuration.shieldCooldownMin.tooltip": "",
+  "combatimprovement.configuration.shieldCooldownMax": "",
+  "combatimprovement.configuration.shieldCooldownMax.tooltip": "",
+  "combatimprovement.configuration.shieldCooldownScaling": "",
+  "combatimprovement.configuration.shieldCooldownScaling.tooltip": "",
+  "combatimprovement.configuration.blockAllProjectileDamage": "",
+  "combatimprovement.configuration.blockAllProjectileDamage.tooltip": "",
+  "combatimprovement.configuration.projectileDamageBlockFactor": "",
+  "combatimprovement.configuration.projectileDamageBlockFactor.tooltip": "",
+  "combatimprovement.configuration.AxeDisableShield": "",
+  "combatimprovement.configuration.AxeDisableShield.tooltip": "",
+  "combatimprovement.configuration.breakShieldResistanceFactor": "",
+  "combatimprovement.configuration.breakShieldResistanceFactor.tooltip": "",
+
+
+  "combatimprovement.configuration.potionTweaks": "Potion tweaks",
+  "combatimprovement.configuration.potionTweaks.button": "",
+  "combatimprovement.configuration.potionTweaks.tooltip": "",
+
+
+  "combatimprovement.configuration.maxStackSizeNormalPotion": "",
+  "combatimprovement.configuration.maxStackSizeNormalPotion.tooltip": "",
+  "combatimprovement.configuration.maxStackSizeSplashPotion": "",
+  "combatimprovement.configuration.maxStackSizeSplashPotion.tooltip": "",
+  "combatimprovement.configuration.maxStackSizeLingeringPotion": "",
+  "combatimprovement.configuration.maxStackSizeLingeringPotion.tooltip": "",
+  "combatimprovement.configuration.cooldownThrowablePotion": "",
+  "combatimprovement.configuration.cooldownThrowablePotion.tooltip": "",
+
+  "combatimprovement.configuration.effectTweaks": "",
+  "combatimprovement.configuration.effectTweaks.tooltip": "",
+  "combatimprovement.configuration.effectTweaks.button": "",
+  "combatimprovement.configuration.strengthMode": "",
+  "combatimprovement.configuration.strengthMode.tooltip": "",
+  "combatimprovement.configuration.strengthPerLevel": "",
+  "combatimprovement.configuration.strengthPerLevel.tooltip": "",
+  "combatimprovement.configuration.weaknessMode": "",
+  "combatimprovement.configuration.weaknessMode.tooltip": "",
+  "combatimprovement.configuration.weaknessExponential": "",
+  "combatimprovement.configuration.weaknessExponential.tooltip": "",
+  "combatimprovement.configuration.weaknessPerLevel": "",
+  "combatimprovement.configuration.weaknessPerLevel.tooltip": "",
+
+  "combatimprovement.tooltip.shield.resistance": "Resistance: %s",
+  "combatimprovement.tooltip.shield.angle": "Size: %s",
+  "combatimprovement.tooltip.shield.delay": "Delay: %s",
+
+  "combatimprovement.tooltip.weapon.twoHanded": "Two Handed Weapon",
+  "combatimprovement.tooltip.weapon.semiTwoHanded": "semiTwoHanded"
+}
